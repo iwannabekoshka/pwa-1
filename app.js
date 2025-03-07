@@ -1,73 +1,66 @@
-const newPeriodFormEl = document.getElementsByTagName("form")[0];
-const startDateInputEl = document.getElementById("start-date");
-const endDateInputEl = document.getElementById("end-date");
-const pastPeriodContainer = document.getElementById("past-periods");
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js')
+          .then(function(registration) {
+              console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          })
+          .catch(function(err) {
+              console.log('ServiceWorker registration failed: ', err);
+          });
+  });
+}
 
-// Add the storage key as an app-wide constant
-const STORAGE_KEY = "period-tracker";
-
-// Listen to form submissions.
-newPeriodFormEl.addEventListener("submit", (event) => {
+document.getElementById('dataForm').addEventListener('submit', function(event) {
   event.preventDefault();
-  const startDate = startDateInputEl.value;
-  const endDate = endDateInputEl.value;
-  if (checkDatesInvalid(startDate, endDate)) {
-    return;
+
+  const email = document.getElementById('email').value;
+  const name = document.getElementById('name').value;
+  const date = new Date().toISOString();
+
+  const formData = { date, email, name };
+
+  if (navigator.onLine) {
+      sendDataToServer(formData);
+  } else {
+      saveDataLocally(formData);
   }
-  storeNewPeriod(startDate, endDate);
-  renderPastPeriods();
-  newPeriodFormEl.reset();
 });
 
-function checkDatesInvalid(startDate, endDate) {
-  if (!startDate || !endDate || startDate > endDate) {
-    newPeriodFormEl.reset();
-    return true;
-  }
-  return false;
-}
-
-function storeNewPeriod(startDate, endDate) {
-  const periods = getAllStoredPeriods();
-  periods.push({ startDate, endDate });
-  periods.sort((a, b) => {
-    return new Date(b.startDate) - new Date(a.startDate);
+function sendDataToServer(data) {
+  fetch('https://mysite/trialdata/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+  })
+  .then(response => {
+      if (response.ok) {
+          console.log('Данные успешно отправлены на сервер');
+      } else {
+          console.error('Ошибка при отправке данных на сервер');
+      }
+  })
+  .catch(error => {
+      console.error('Ошибка:', error);
+      saveDataLocally(data); // Если отправка не удалась, сохраняем локально
   });
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(periods));
 }
 
-function getAllStoredPeriods() {
-  const data = window.localStorage.getItem(STORAGE_KEY);
-  const periods = data ? JSON.parse(data) : [];
-  console.dir(periods);
-  console.log(periods);
-  return periods;
+function saveDataLocally(data) {
+  let storedData = JSON.parse(localStorage.getItem('formData')) || [];
+  storedData.push(data);
+  localStorage.setItem('formData', JSON.stringify(storedData));
+  console.log('Данные сохранены локально');
 }
 
-function renderPastPeriods() {
-  const pastPeriodHeader = document.createElement("h2");
-  const pastPeriodList = document.createElement("ul");
-  const periods = getAllStoredPeriods();
-  if (periods.length === 0) {
-    return;
+// Проверка соединения и отправка данных, если оно восстановлено
+window.addEventListener('online', function() {
+  let storedData = JSON.parse(localStorage.getItem('formData')) || [];
+  if (storedData.length > 0) {
+      storedData.forEach(data => {
+          sendDataToServer(data);
+      });
+      localStorage.removeItem('formData');
   }
-  pastPeriodContainer.textContent = "";
-  pastPeriodHeader.textContent = "Past periods";
-  periods.forEach((period) => {
-    const periodEl = document.createElement("li");
-    periodEl.textContent = `From ${formatDate(
-      period.startDate,
-    )} to ${formatDate(period.endDate)}`;
-    pastPeriodList.appendChild(periodEl);
-  });
-
-  pastPeriodContainer.appendChild(pastPeriodHeader);
-  pastPeriodContainer.appendChild(pastPeriodList);
-}
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  return date.toLocaleDateString("en-US", { timeZone: "UTC" });
-}
-
-renderPastPeriods();
+});
