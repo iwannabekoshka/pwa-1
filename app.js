@@ -14,9 +14,11 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-document
-  .getElementById("dataForm")
-  .addEventListener("submit", function (event) {
+const ENDPOINT = "https://pwa-1-server.onrender.com/trials/";
+
+const form = document.getElementById("dataForm");
+
+form.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const email = document.getElementById("email").value;
@@ -33,7 +35,7 @@ document
   });
 
 function sendDataToServer(data) {
-  fetch("https://mysite/trialdata/", {
+  fetch(ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,6 +45,7 @@ function sendDataToServer(data) {
     .then((response) => {
       if (response.ok) {
         console.log("Данные успешно отправлены на сервер");
+        form.reset();
       } else {
         console.error("Ошибка при отправке данных на сервер");
       }
@@ -58,6 +61,7 @@ function saveDataLocally(data) {
   storedData.push(data);
   localStorage.setItem("formData", JSON.stringify(storedData));
   console.log("Данные сохранены локально");
+  form.reset();
 }
 
 // Проверка соединения и отправка данных, если оно восстановлено
