@@ -65,12 +65,14 @@ function saveDataLocally(data) {
 }
 
 // Проверка соединения и отправка данных, если оно восстановлено
-window.addEventListener("online", function () {
-  let storedData = JSON.parse(localStorage.getItem("formData")) || [];
-  if (storedData.length > 0) {
-    storedData.forEach((data) => {
-      sendDataToServer(data);
-    });
-    localStorage.removeItem("formData");
+setInterval(() => {
+  if (navigator.onLine) {
+    let storedData = JSON.parse(localStorage.getItem("formData")) || [];
+    if (storedData.length > 0) {
+      storedData.forEach((data) => {
+        sendDataToServer(data);
+      });
+      localStorage.removeItem("formData");
+    }
   }
-});
+}, 5000);

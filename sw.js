@@ -1,7 +1,8 @@
-const CACHE_NAME = 'pwa-form-cache-v1';
+const CACHE_NAME = 'pwa-form-cache-v2';
 const urlsToCache = [
     '/',
     '/index.html',
+    '/trials.html',
     '/app.js'
 ];
 
@@ -20,5 +21,15 @@ self.addEventListener('fetch', function(event) {
             .then(function(response) {
                 return response || fetch(event.request);
             })
+    );
+});
+
+self.addEventListener('activate', (event) => {
+    event.waitUntil(
+        caches.keys().then((keys) => {
+            return Promise.all(
+                keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+            );
+        })
     );
 });
