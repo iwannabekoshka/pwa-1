@@ -1,9 +1,9 @@
-const CACHE_NAME = 'pwa-form-cache-v2';
+const CACHE_NAME = 'pwa-form-cache-v3';
 const urlsToCache = [
     '/',
     '/index.html',
     '/trials.html',
-    '/app.js'
+    '/app.js',
 ];
 
 self.addEventListener('install', function(event) {

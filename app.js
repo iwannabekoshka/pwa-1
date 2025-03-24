@@ -14,8 +14,6 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-const ENDPOINT = "https://pwa-1-server.onrender.com/trials/";
-
 const form = document.getElementById("dataForm");
 
 form.addEventListener("submit", function (event) {
@@ -27,34 +25,10 @@ form.addEventListener("submit", function (event) {
 
     const formData = { date, email, name };
 
-    if (navigator.onLine) {
-      sendDataToServer(formData);
-    } else {
-      saveDataLocally(formData);
-    }
-  });
+    saveDataLocally(formData);
 
-function sendDataToServer(data) {
-  fetch(ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-      if (response.ok) {
-        console.log("Данные успешно отправлены на сервер");
-        form.reset();
-      } else {
-        console.error("Ошибка при отправке данных на сервер");
-      }
-    })
-    .catch((error) => {
-      console.error("Ошибка:", error);
-      saveDataLocally(data); // Если отправка не удалась, сохраняем локально
-    });
-}
+    fireConfetti();
+  });
 
 function saveDataLocally(data) {
   let storedData = JSON.parse(localStorage.getItem("formData")) || [];
@@ -64,15 +38,27 @@ function saveDataLocally(data) {
   form.reset();
 }
 
-// Проверка соединения и отправка данных, если оно восстановлено
-setInterval(() => {
-  if (navigator.onLine) {
-    let storedData = JSON.parse(localStorage.getItem("formData")) || [];
-    if (storedData.length > 0) {
-      storedData.forEach((data) => {
-        sendDataToServer(data);
-      });
-      localStorage.removeItem("formData");
-    }
+const jsConfetti = new JSConfetti();
+
+function fireConfetti() {
+  let confettiCount = 200;
+  let emojiCount = 20;
+  if (window.innerWidth > 768) {
+    confettiCount = 500;
+    emojiCount = 100;
   }
-}, 5000);
+
+  jsConfetti.addConfetti({
+    confettiColors: new Array(360)
+      .fill("")
+      .map((c, i) => `hsl(${i}, 100%, 50%)`),
+    confettiNumber: confettiCount,
+    confettiRadius: 6,
+  });
+
+  jsConfetti.addConfetti({
+    emojis: ["🦄", "✨", "💫", "🎉", "🎊"],
+    emojiSize: 35,
+    confettiNumber: emojiCount,
+  });
+}

@@ -4,19 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PWA Form</title>
+  <title>PVS-Studio Trials</title>
+
+  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="style.css">
 
   <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-  <p><a href="/index.html">Обратно на форму</a></p>
-
-  <p>Local</p>
-  <ul id="trials-local"></ul>
-
-  <p>Server</p>
-  <ul id="trials-server"></ul>
+  <div class="container">
+    <p><a href="/index.html">Обратно на форму</a></p>
+    <p><button id="saveToExcel">Excel</button></p>
+    <p>Local</p>
+    <ul id="trials-local"></ul>
+  </div>
 
   <script async>
     if ("serviceWorker" in navigator) {
@@ -35,10 +38,7 @@
       });
     }
 
-    const ENDPOINT = "https://pwa-1-server.onrender.com/trials/";
-
     const localList = document.querySelector("#trials-local");
-    const serverList = document.querySelector("#trials-server");
 
     let localData = JSON.parse(localStorage.getItem("formData")) || [];
     localData.forEach(item => {
@@ -47,26 +47,70 @@
 
       localList.appendChild(listItem);
     });
+  </script>
 
-    fetch(ENDPOINT, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then(response => response.text())
-      .then(text => {
-        const items = text.trim().split("\n").map(item => JSON.parse(item));
-        items.forEach(item => {
-          const listItem = document.createElement("li");
-          listItem.textContent = `${item.date} ${item.email} ${item.name}`;
+  <script>
+    document.getElementById('saveToExcel').addEventListener('click', async function () {
+      // Проверяем поддержку API
+      if (!window.showSaveFilePicker) {
+        alert("Ваш браузер не поддерживает сохранение файлов на устройство.");
+        return;
+      }
 
-          serverList.appendChild(listItem);
-        })
-      })
-      .catch((error) => {
-        console.error("Ошибка:", error);
-      });
+      // Получаем данные из localStorage
+      let data = localStorage.getItem('formData');
+
+      if (!data) {
+        alert("Нет данных для сохранения!");
+        return;
+      }
+
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        alert("Ошибка при чтении данных!");
+        return;
+      }
+
+      if (!Array.isArray(data) || data.length === 0) {
+        alert("Данные в некорректном формате!");
+        return;
+      }
+
+      // Формируем заголовки CSV (берём ключи из первого объекта)
+      let headers = Object.keys(data[0]);
+      let csvRows = [headers.join(",")];
+
+      // Заполняем строки CSV
+      for (let row of data) {
+        let values = headers.map(header => `"${row[header] || ''}"`);
+        csvRows.push(values.join(","));
+      }
+
+      // Создаём CSV-строку
+      let csvString = csvRows.join("\n");
+
+      try {
+        // Запрашиваем у пользователя место для сохранения файла
+        const fileHandle = await window.showSaveFilePicker({
+          suggestedName: "trials.csv",
+          types: [{
+            description: "CSV file",
+            accept: { "text/csv": [".csv"] }
+          }]
+        });
+
+        // Открываем файл для записи
+        const writable = await fileHandle.createWritable();
+        await writable.write(csvString);
+        await writable.close();
+
+        alert("Файл успешно сохранён!");
+
+      } catch (error) {
+        console.error("Ошибка при сохранении файла:", error);
+      }
+    });
   </script>
 </body>
 
