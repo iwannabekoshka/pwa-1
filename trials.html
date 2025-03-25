@@ -58,58 +58,47 @@
       }
 
       // Получаем данные из localStorage
-      let data = localStorage.getItem('formData');
+      let trials = localStorage.getItem('formData');
 
-      if (!data) {
+      if (!trials) {
         alert("Нет данных для сохранения!");
         return;
       }
 
       try {
-        data = JSON.parse(data);
+        trials = JSON.parse(trials);
       } catch (e) {
         alert("Ошибка при чтении данных!");
         return;
       }
 
-      if (!Array.isArray(data) || data.length === 0) {
+      if (!Array.isArray(trials) || trials.length === 0) {
         alert("Данные в некорректном формате!");
         return;
       }
 
-      // Формируем заголовки CSV (берём ключи из первого объекта)
-      let headers = Object.keys(data[0]);
-      let csvRows = [headers.join(",")];
+      // Преобразуем данные в CSV
+      let csvContent = "data:text/csv;charset=utf-8,";
 
-      // Заполняем строки CSV
-      for (let row of data) {
-        let values = headers.map(header => `"${row[header] || ''}"`);
-        csvRows.push(values.join(","));
-      }
+      // Добавляем заголовки (если есть)
+      const headers = Object.keys(trials[0]);
+      csvContent += headers.join(",") + "\n";
 
-      // Создаём CSV-строку
-      let csvString = csvRows.join("\n");
+      // Добавляем строки с данными
+      trials.forEach(row => {
+        csvContent += headers.map(field => JSON.stringify(row[field] || "")).join(",") + "\n";
+      });
 
-      try {
-        // Запрашиваем у пользователя место для сохранения файла
-        const fileHandle = await window.showSaveFilePicker({
-          suggestedName: "trials.csv",
-          types: [{
-            description: "CSV file",
-            accept: { "text/csv": [".csv"] }
-          }]
-        });
+      // Создаём ссылку для скачивания
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "trials.csv");
 
-        // Открываем файл для записи
-        const writable = await fileHandle.createWritable();
-        await writable.write(csvString);
-        await writable.close();
-
-        alert("Файл успешно сохранён!");
-
-      } catch (error) {
-        console.error("Ошибка при сохранении файла:", error);
-      }
+      // Для iOS нужно добавить ссылку в DOM перед кликом
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
   </script>
 </body>

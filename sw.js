@@ -4,6 +4,8 @@ const urlsToCache = [
     '/index.html',
     '/trials.html',
     '/app.js',
+    '/style.css',
+    '/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf',
 ];
 
 self.addEventListener('install', function(event) {
