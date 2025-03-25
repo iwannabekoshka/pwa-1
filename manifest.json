@@ -1,6 +1,6 @@
 {
-  "name": "PWA Form",
-  "short_name": "PWAForm",
+  "name": "PVS-Studio conference helper",
+  "short_name": "PVS-Studio Conf",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
