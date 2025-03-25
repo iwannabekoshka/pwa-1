@@ -13,3 +13,5 @@ if ("serviceWorker" in navigator) {
       });
   });
 }
+
+const LOCAL_STORAGE_KEY = "trials";

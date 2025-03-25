@@ -15,9 +15,9 @@ form.addEventListener("submit", function (event) {
   });
 
 function saveDataLocally(data) {
-  let storedData = JSON.parse(localStorage.getItem("formData")) || [];
+  let storedData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
   storedData.push(data);
-  localStorage.setItem("formData", JSON.stringify(storedData));
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storedData));
   console.log("Данные сохранены локально");
   form.reset();
 }

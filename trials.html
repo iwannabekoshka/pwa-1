@@ -15,17 +15,17 @@
 
 <body>
   <div class="container">
-    <p><a href="/index.html">Обратно на форму</a></p>
-
-    <p><button id="saveToExcel">Excel</button></p>
-
-    <p>Local</p>
-    <ul id="trials-local"></ul>
+    <div style="display: grid; gap: 10px;">
+      <p><a href="/index.html">Обратно на форму</a></p>
+      <p><button id="save-to-excel">Сохранить в Excel</button></p>
+      <p><button id="clear-local-data">Очистить данные приложения</button></p>
+      <p>Local</p>
+      <ul id="trials-local"></ul>
+    </div>
   </div>
 
-  <script src="/static/js/sw-register.js" defer></script>
+  <script src="/static/js/app.js" defer></script>
   <script src="/static/js/trials.js" defer></script>
-
 </body>
 
 </html>
