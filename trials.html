@@ -51,12 +51,6 @@
 
   <script>
     document.getElementById('saveToExcel').addEventListener('click', async function () {
-      // Проверяем поддержку API
-      if (!window.showSaveFilePicker) {
-        alert("Ваш браузер не поддерживает сохранение файлов на устройство.");
-        return;
-      }
-
       // Получаем данные из localStorage
       let trials = localStorage.getItem('formData');
 
