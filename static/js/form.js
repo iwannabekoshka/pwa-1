@@ -53,7 +53,7 @@ trialsLink.addEventListener("click", e => {
 
   const answer = prompt("Введите пароль");
 
-  if (answer === "pvs!27conference84") {
+  if (answer === "123") {
     window.location.href = "/trials.html";
   } else {
     alert("Кажется, вам сюда нельзя. Если всё же можно, то запросите пароль у Веб-отдела :)");
