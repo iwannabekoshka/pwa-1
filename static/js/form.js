@@ -1,19 +1,3 @@
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker
-      .register("/sw.js")
-      .then(function (registration) {
-        console.log(
-          "ServiceWorker registration successful with scope: ",
-          registration.scope
-        );
-      })
-      .catch(function (err) {
-        console.log("ServiceWorker registration failed: ", err);
-      });
-  });
-}
-
 const form = document.getElementById("dataForm");
 
 form.addEventListener("submit", function (event) {
@@ -62,3 +46,16 @@ function fireConfetti() {
     confettiNumber: emojiCount,
   });
 }
+
+const trialsLink = document.querySelector("#link-trials");
+trialsLink.addEventListener("click", e => {
+  e.preventDefault();
+
+  const answer = prompt("Введите пароль");
+
+  if (answer === "pvs!27conference84") {
+    window.location.href = "/trials.html";
+  } else {
+    alert("Кажется, вам сюда нельзя. Если всё же можно, то запросите пароль у Веб-отдела :)");
+  }
+})

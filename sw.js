@@ -1,10 +1,13 @@
-const CACHE_NAME = 'pwa-form-cache-v4';
+const CACHE_NAME = 'pwa-form-cache-v5';
 const urlsToCache = [
     '/',
     '/index.html',
     '/trials.html',
-    '/app.js',
-    '/style.css',
+    '/static/js/confetti.js',
+    '/static/js/form.js',
+    '/static/js/sw-register.js',
+    '/static/js/trials.js',
+    '/static/css/style.css',
     '/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf',
 ];
 

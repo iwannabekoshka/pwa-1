@@ -8,14 +8,14 @@
 
   <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="/static/css/style.css">
 
   <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
   <div class="container">
-    <p style="margin-bottom: 1em;"><a href="/trials.html">Посмотреть текущие триалы</a></p>
+    <p style="margin-bottom: 1em;"><a href="/trials.html" id="link-trials">Посмотреть текущие триалы</a></p>
 
     <h1>Форма заказа триала</h1>
 
@@ -34,8 +34,9 @@
     </form>
   </div>
 
+  <script src="/static/js/sw-register.js" defer></script>
   <script src="/static/js/confetti.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="/static/js/form.js" defer></script>
 </body>
 
 </html>
