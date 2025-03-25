@@ -3,12 +3,13 @@ const urlsToCache = [
     '/',
     '/index.html',
     '/trials.html',
+    '/icons/pvs_logo_4.svg',
+    '/static/css/style.css',
+    '/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf',
     '/static/js/app.js',
     '/static/js/confetti.js',
     '/static/js/form.js',
     '/static/js/trials.js',
-    '/static/css/style.css',
-    '/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf',
 ];
 
 self.addEventListener('install', function(event) {
