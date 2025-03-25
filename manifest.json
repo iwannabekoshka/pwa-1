@@ -30,6 +30,11 @@
       "src": "icons/pvs_logo_4.svg",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "icons/pvs_logo_4.svg",
+      "sizes": "1024x1024",
+      "type": "image/png"
     }
   ]
 }
