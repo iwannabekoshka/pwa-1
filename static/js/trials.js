@@ -1,16 +1,17 @@
 const localList = document.querySelector("#trials-local");
 const clearLocalDataBtn = document.querySelector("#clear-local-data");
 const saveExcelBtn = document.querySelector("#save-to-excel");
+const conferenceInput = document.querySelector("#conference-name");
 
 renderTrialsList();
 
 function renderTrialsList() {
   localList.innerHTML = "";
 
-  const localData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+  const localData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_TRIALS)) || [];
   localData.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${item.date} ${item.email} ${item.name}`;
+    listItem.textContent = `${item.date} ${item.email} ${item.name} ${item.conferenceName}`;
 
     localList.appendChild(listItem);
   });
@@ -71,6 +72,11 @@ clearLocalDataBtn.addEventListener("click", (e) => {
     return;
   }
 
-  localStorage.removeItem(LOCAL_STORAGE_KEY);
+  localStorage.removeItem(LOCAL_STORAGE_KEY_TRIALS);
   renderTrialsList()
+});
+
+conferenceInput.value = localStorage.getItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME) || "";
+conferenceInput.addEventListener("input", e => {
+  localStorage.setItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME, e.target.value);
 });

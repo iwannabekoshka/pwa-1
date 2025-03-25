@@ -6,8 +6,9 @@ form.addEventListener("submit", function (event) {
     const email = document.getElementById("email").value;
     const name = document.getElementById("name").value;
     const date = new Date().toISOString();
+    const conferenceName = localStorage.getItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME, "");
 
-    const formData = { date, email, name };
+    const formData = { date, email, name, conferenceName };
 
     saveDataLocally(formData);
 
@@ -15,9 +16,9 @@ form.addEventListener("submit", function (event) {
   });
 
 function saveDataLocally(data) {
-  let storedData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+  let storedData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_TRIALS)) || [];
   storedData.push(data);
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storedData));
+  localStorage.setItem(LOCAL_STORAGE_KEY_TRIALS, JSON.stringify(storedData));
   console.log("Данные сохранены локально");
   form.reset();
 }

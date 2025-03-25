@@ -14,4 +14,5 @@ if ("serviceWorker" in navigator) {
   });
 }
 
-const LOCAL_STORAGE_KEY = "trials";
+const LOCAL_STORAGE_KEY_TRIALS = "trials";
+const LOCAL_STORAGE_KEY_CONFERENCE_NAME = "conferenceName";
