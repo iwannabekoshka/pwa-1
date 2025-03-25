@@ -1,19 +1,49 @@
-const localList = document.querySelector("#trials-local");
+const localTrialsElem = document.querySelector("#trials-local");
 const clearLocalDataBtn = document.querySelector("#clear-local-data");
 const saveExcelBtn = document.querySelector("#save-to-excel");
 const conferenceInput = document.querySelector("#conference-name");
 
-renderTrialsList();
+renderTrials();
 
-function renderTrialsList() {
-  localList.innerHTML = "";
+function renderTrials() {
+  localTrialsElem.innerHTML = "";
+  const tbody = document.createElement("tbody");
+  localTrialsElem.appendChild(tbody);
 
-  const localData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_TRIALS)) || [];
+  const thRow = document.createElement("tr");
+  tbody.appendChild(thRow);
+
+  const localData =
+    JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_TRIALS)) || [];
+  const headers = Object.keys(localData[0]).sort();
+  headers.forEach((header) => {
+    const th = document.createElement("th");
+    th.textContent = header;
+
+    thRow.appendChild(th);
+  });
+
   localData.forEach((item) => {
-    const listItem = document.createElement("li");
-    listItem.textContent = `${item.date} ${item.email} ${item.name} ${item.conferenceName}`;
+    const tr = document.createElement("tr");
+    tbody.appendChild(tr);
 
-    localList.appendChild(listItem);
+    headers.forEach((header) => {
+      const td = document.createElement("td");
+      const value = item[header];
+
+      if (header === "date") {
+        const event = new Date(value);
+        td.textContent = event.toLocaleDateString("ru-RU", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        });
+      } else {
+        td.textContent = value;
+      }
+
+      tr.appendChild(td);
+    });
   });
 }
 
@@ -38,26 +68,58 @@ saveExcelBtn.addEventListener("click", async function () {
     return;
   }
 
-  // Преобразуем данные в CSV
-  let csvContent = "data:text/csv;charset=utf-8,";
+  // Генерация XML для Excel
+  const xmlHeader = `<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
+  <Worksheet ss:Name="Data">
+    <Table>`;
 
-  // Добавляем заголовки (если есть)
+  // Определяем заголовки (ключи объектов)
   const headers = Object.keys(trials[0]);
-  csvContent += headers.join(",") + "\n";
 
-  // Добавляем строки с данными
+  // Создаем строку заголовков
+  let xmlContent = `<Row>`;
+  headers.forEach((header) => {
+    xmlContent += `<Cell><Data ss:Type="String">${header}</Data></Cell>`;
+  });
+  xmlContent += `<Cell><Data ss:Type="String">humanDate</Data></Cell>`;
+  xmlContent += `</Row>`;
+
+  // Добавляем данные в таблицу
   trials.forEach((row) => {
-    csvContent +=
-      headers.map((field) => JSON.stringify(row[field] || "")).join(",") + "\n";
+    xmlContent += `<Row>`;
+    headers.forEach((field) => {
+      let cellValue = row[field] ? row[field] : "";
+      xmlContent += `<Cell><Data ss:Type="String">${cellValue}</Data></Cell>`;
+    });
+    const date = new Date(row.date);
+    const humanDate = date.toLocaleDateString("ru-RU", {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    });
+    xmlContent += `<Cell><Data ss:Type="String">${humanDate}</Data></Cell>`;
+    xmlContent += `</Row>`;
   });
 
-  // Создаём ссылку для скачивания
-  const encodedUri = encodeURI(csvContent);
-  const link = document.createElement("a");
-  link.setAttribute("href", encodedUri);
-  link.setAttribute("download", "trials.csv");
+  // Закрываем XML
+  const xmlFooter = `</Table>
+  </Worksheet>
+</Workbook>`;
 
-  // Для iOS нужно добавить ссылку в DOM перед кликом
+  // Собираем полный XML-файл
+  const excelContent = xmlHeader + xmlContent + xmlFooter;
+
+  // Создаём Blob для скачивания
+  const blob = new Blob([excelContent], { type: "application/vnd.ms-excel" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "trials.xls"; // Используем .xls (будет открываться в Excel)
+
+  // Для iOS добавляем ссылку в DOM перед кликом
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -73,10 +135,11 @@ clearLocalDataBtn.addEventListener("click", (e) => {
   }
 
   localStorage.removeItem(LOCAL_STORAGE_KEY_TRIALS);
-  renderTrialsList()
+  renderTrials();
 });
 
-conferenceInput.value = localStorage.getItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME) || "";
-conferenceInput.addEventListener("input", e => {
+conferenceInput.value =
+  localStorage.getItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME) || "";
+conferenceInput.addEventListener("input", (e) => {
   localStorage.setItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME, e.target.value);
 });

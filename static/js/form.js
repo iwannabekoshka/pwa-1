@@ -3,14 +3,19 @@ const form = document.getElementById("dataForm");
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const email = document.getElementById("email").value;
-    const name = document.getElementById("name").value;
+    const formData = convertFormDataToObject(new FormData(form));
+
     const date = new Date().toISOString();
-    const conferenceName = localStorage.getItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME, "");
+    const conferenceName = localStorage.getItem(LOCAL_STORAGE_KEY_CONFERENCE_NAME) || "";
 
-    const formData = { date, email, name, conferenceName };
+    const trial = { 
+      ...formData, 
+      language: formData.language || "", 
+      date, 
+      conferenceName
+    };
 
-    saveDataLocally(formData);
+    saveDataLocally(trial);
 
     fireConfetti();
   });
@@ -59,4 +64,21 @@ trialsLink.addEventListener("click", e => {
   } else {
     alert("Кажется, вам сюда нельзя. Если всё же можно, то запросите пароль у Веб-отдела :)");
   }
-})
+});
+
+function convertFormDataToObject(formData) {
+  const obj = {};
+  formData.forEach((value, key) => {
+    if (obj.hasOwnProperty(key)) {
+      if (Array.isArray(obj[key])) {
+        obj[key] = [...obj[key], value];
+      } else {
+        obj[key] = [obj[key], value];
+      }
+    } else {
+      obj[key] = value;
+    }
+  });
+
+  return obj;
+}

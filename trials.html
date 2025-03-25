@@ -16,16 +16,25 @@
 <body>
   <div class="container">
     <div style="display: grid; gap: 10px;">
-      <p><a href="/index.html">Обратно на форму</a></p>
 
-      <p><button id="save-to-excel">Сохранить в Excel</button></p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <div><a href="/index.html">Обратно на форму</a></div>
 
-      <p><button id="clear-local-data">Очистить данные приложения</button></p>
+        <div><button id="save-to-excel">Сохранить в Excel</button></div>
 
-      <p><input type="text" id="conference-name" placeholder="Название конференции"></p>
+        <div><button id="clear-local-data">Очистить данные приложения</button></div>
+      </div>
 
-      <p>Local</p>
-      <ul id="trials-local"></ul>
+      <div>
+        <label style="display: grid; gap: 5px;">
+          Название конференции
+          <input type="text" id="conference-name"></label>
+      </div>
+
+      <h2>Данные приложения</h2>
+      <div style="overflow-x: auto;">
+        <table id="trials-local" class="table"></table>
+      </div>
     </div>
   </div>
 
