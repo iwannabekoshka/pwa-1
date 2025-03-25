@@ -7,32 +7,32 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "icons/pvs_logo_4.svg",
+      "src": "icons/pvs_logo_4.png",
       "sizes": "72x72",
       "type": "image/png"
     },
     {
-      "src": "icons/pvs_logo_4.svg",
+      "src": "icons/pvs_logo_4.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "icons/pvs_logo_4.svg",
+      "src": "icons/pvs_logo_4.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "icons/pvs_logo_4.svg",
+      "src": "icons/pvs_logo_4.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/pvs_logo_4.svg",
+      "src": "icons/pvs_logo_4.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "icons/pvs_logo_4.svg",
+      "src": "icons/pvs_logo_4.png",
       "sizes": "1024x1024",
       "type": "image/png"
     }

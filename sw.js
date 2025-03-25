@@ -1,9 +1,9 @@
-const CACHE_NAME = 'pwa-form-cache-v5';
+const CACHE_NAME = 'pwa-form-cache-v6';
 const urlsToCache = [
     '/',
     '/index.html',
     '/trials.html',
-    '/icons/pvs_logo_4.svg',
+    '/icons/pvs_logo_4.png',
     '/static/css/style.css',
     '/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf',
     '/static/js/app.js',
