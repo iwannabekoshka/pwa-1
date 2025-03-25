@@ -19,7 +19,7 @@ function renderTrialsList() {
 
 saveExcelBtn.addEventListener("click", async function () {
   // Получаем данные из localStorage
-  let trials = localStorage.getItem("formData");
+  let trials = localStorage.getItem(LOCAL_STORAGE_KEY_TRIALS);
 
   if (!trials) {
     alert("Нет данных для сохранения!");
