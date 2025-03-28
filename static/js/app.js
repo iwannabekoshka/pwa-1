@@ -7,6 +7,21 @@ if ("serviceWorker" in navigator) {
           "ServiceWorker registration successful with scope: ",
           registration.scope
         );
+
+        registration.onupdatefound = () => {
+          const newSW = reg.installing;
+          newSW.onstatechange = () => {
+            if (
+              newSW.state === "installed" &&
+              navigator.serviceWorker.controller
+            ) {
+              if (confirm("Доступно обновление. Обновить сейчас?")) {
+                newSW.postMessage("skipWaiting");
+                window.location.reload();
+              }
+            }
+          };
+        };
       })
       .catch(function (err) {
         console.log("ServiceWorker registration failed: ", err);
