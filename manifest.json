@@ -3,7 +3,7 @@
   "short_name": "PVS-Studio Conf",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "background_color": "#01a0f2",
   "theme_color": "#ffffff",
   "icons": [
     {
