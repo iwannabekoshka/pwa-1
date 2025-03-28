@@ -31,12 +31,8 @@ function saveDataLocally(data) {
 const jsConfetti = new JSConfetti();
 
 function fireConfetti() {
-  let confettiCount = 200;
-  let emojiCount = 20;
-  if (window.innerWidth > 768) {
-    confettiCount = 500;
-    emojiCount = 100;
-  }
+  let confettiCount = 150;
+  let emojiCount = 50;
 
   jsConfetti.addConfetti({
     confettiColors: new Array(360)
@@ -48,7 +44,7 @@ function fireConfetti() {
 
   jsConfetti.addConfetti({
     emojis: ["🦄", "✨", "💫", "🎉", "🎊"],
-    emojiSize: 35,
+    emojiSize: 64,
     confettiNumber: emojiCount,
   });
 }
