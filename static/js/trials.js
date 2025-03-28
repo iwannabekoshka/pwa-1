@@ -3,6 +3,7 @@ const clearLocalDataBtn = document.querySelector("#clear-local-data");
 const saveExcelBtn = document.querySelector("#save-to-excel");
 const conferenceInput = document.querySelector("#conference-name");
 const countElem = document.querySelector("#rows-count");
+const backToFormLink = document.querySelector("#link-form");
 
 renderTrials();
 
@@ -143,6 +144,18 @@ clearLocalDataBtn.addEventListener("click", (e) => {
 
   localStorage.removeItem(LOCAL_STORAGE_KEY_TRIALS);
   renderTrials();
+});
+
+backToFormLink.addEventListener("click", e => {
+  e.preventDefault();
+
+  if (conferenceInput.value.trim() === "") {
+    alert("Введите название конференции! Пожалуйста!");
+
+    conferenceInput.focus();
+  } else {
+    window.location.href = "/index.html";
+  }
 });
 
 conferenceInput.value =
