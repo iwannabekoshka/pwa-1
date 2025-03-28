@@ -5,7 +5,7 @@ const urlsToCache = [
     '/trials.html',
     '/icons/pvs_logo_4.png',
     '/static/css/style.css',
-    '/static/fonts/Manrope/Manrope-VariableFont_wdth.ttf',
+    '/static/fonts/Manrope/Manrope-VariableFont_wght.ttf',
     '/static/fonts/Pribambas/WEB/Pribambas-Regular.woff2',
     '/static/fonts/Pribambas/WEB/Pribambas-Regular.woff',
     '/static/js/app.js',

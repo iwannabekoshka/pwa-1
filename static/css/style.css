@@ -37,7 +37,7 @@
 
 @font-face {
   font-family: 'Manrope';
-  src: url('/static/fonts/Manrope/Manrope-VariableFont_wdth.ttf') format('truetype');
+  src: url('/static/fonts/Manrope/Manrope-VariableFont_wght.ttf') format('truetype');
   font-weight: 100 900;
   font-stretch: 75% 100%;
   font-style: normal;
@@ -61,11 +61,13 @@ html {
 }
 
 body {
+  position: relative;
+
   display: grid;
   place-items: center;
 
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   min-height: 100vh;
 
   font-family: 'Manrope';
@@ -198,11 +200,12 @@ h1::after {
   transform: translateY(2px);
 }
 
-#link-trials {
+.link-trials {
   position: absolute;
   bottom: 5px;
   right: 5px;
-
+}
+.link-trials a {
   text-decoration: none;
 }
 
