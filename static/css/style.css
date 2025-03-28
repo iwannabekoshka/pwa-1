@@ -19,6 +19,7 @@
 
   --color-checkbox-background: rgba(230, 230, 230, 1);
   --color-checkbox-text: var(--color-body-text);
+  --color-checkbox-hover-background: rgba(200, 200, 200, 1);
   --color-checkbox-active-background: rgba(1, 168, 229, 1);
   --color-checkbox-active-text: var(--color-card-background);
   --checkbox-font-size: 0.75rem;
@@ -67,7 +68,7 @@ body {
   place-items: center;
 
   padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
   min-height: 100vh;
 
   font-family: 'Manrope';
@@ -151,6 +152,10 @@ h1::after {
   border-radius: 8px;
 
   transition: .2s;
+  cursor: pointer;
+}
+.checkboxes > label:hover {
+  background-color: var(--color-checkbox-hover-background);
 }
 .checkboxes > label:has(input:checked) {
   color: var(--color-checkbox-active-text);
@@ -193,6 +198,10 @@ h1::after {
   border-radius: 8px;
 
   transition: .2s;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: var(--color-button-active-background);
 }
 .button:active {
   background-color: var(--color-button-active-background);

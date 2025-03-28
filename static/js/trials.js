@@ -2,6 +2,7 @@ const localTrialsElem = document.querySelector("#trials-local");
 const clearLocalDataBtn = document.querySelector("#clear-local-data");
 const saveExcelBtn = document.querySelector("#save-to-excel");
 const conferenceInput = document.querySelector("#conference-name");
+const countElem = document.querySelector("#rows-count");
 
 renderTrials();
 
@@ -22,6 +23,8 @@ function renderTrials() {
 
     thRow.appendChild(th);
   });
+
+  countElem.textContent = localData.length;
 
   localData.forEach((item) => {
     const tr = document.createElement("tr");
