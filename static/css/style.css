@@ -5,45 +5,208 @@
   box-sizing: border-box;
 }
 
+:root {
+  --color-body-background: rgba(1, 160, 242, 1);
+  --color-body-text: rgba(20, 20, 20, 1);
+
+  --body-font-size-mobile: 18px;
+  --body-font-size-tablet: 36px;
+  --body-font-size: var(--body-font-size-mobile);
+
+  --color-card-background: rgba(255, 255, 255, 1);
+  --card-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.15);
+  --card-padding: 2rem;
+
+  --color-checkbox-background: rgba(230, 230, 230, 1);
+  --color-checkbox-text: var(--color-body-text);
+  --color-checkbox-active-background: rgba(1, 168, 229, 1);
+  --color-checkbox-active-text: var(--color-card-background);
+  --checkbox-font-size: 0.75rem;
+  --checkbox-padding-block: 0.75em;
+
+  --color-input-background: var(--color-checkbox-background);
+  --color-input-placeholder: rgba(203, 203, 203, 1);
+  --input-font-size: 0.75rem;
+  --input-padding: 1em;
+
+  --color-button-background: rgba(21, 198, 185, 1);
+  --color-button-active-background: var(--color-body-background);
+  --color-button-text: var(--color-card-background);
+  --button-padding-block: 0.5em;
+}
+
 @font-face {
-  font-family: 'OpenSansVariable';
-  src: url('/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf') format('truetype');
-  font-weight: 100 900; /* Диапазон веса */
-  font-stretch: 75% 100%; /* Если шрифт поддерживает wdth */
+  font-family: 'Manrope';
+  src: url('/static/fonts/Manrope/Manrope-VariableFont_wdth.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 100%;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Pribambas';
+  src: url('/static/fonts/Pribambas/WEB/Pribambas-Regular.woff2') format('woff2'),
+       url('/static/fonts/Pribambas/WEB/Pribambas-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
-body {
-  font-family: 'OpenSansVariable', sans-serif;
-  font-variation-settings: "wght" 400, "wdth" 100;
+html {
+  font-size: var(--body-font-size);
+}
+@media (min-width: 768px) {
+  :root {
+    --body-font-size: var(--body-font-size-tablet);
+  }
 }
 
 body {
-  padding-top: 50px;
-}
+  display: grid;
+  place-items: center;
 
-h1, h2, h3 {
-  font-variation-settings: "wght" 700;
-}
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  min-height: 100vh;
 
-h1 {
-  font-size: 2rem;
-  margin-bottom: 1em;
+  font-family: 'Manrope';
+  font-size: 1rem;
+  color: var(--color-body-text);
+
+  background-color: var(--color-body-background);
 }
 
 .container {
-  width: min(100% - 2rem, 800px);
-  margin-inline: auto;
+  width: min(100% - 2rem, 768px);
+  margin-left: auto;
+  margin-right: auto;
 }
 
-form > *+* {
-  margin-top: 1rem;
+.card {
+  padding: var(--card-padding);
+  /* h1 Pribambas line-height добавляет слишком большой отступ сверху, компенсируем */
+  padding-top: calc(0.8 * var(--card-padding));
+
+  background-color: var(--color-card-background);
+  box-shadow: var(--card-shadow);
+  border-radius: 8px;
 }
 
-form > * {
+form {
   display: grid;
+  gap: 1.3rem;
 }
 
+h1 {
+  position: relative;
+
+  font-family: 'Pribambas';
+  font-size: 2rem;
+  line-height: 90%;
+  color: var(--color-body-background);
+  text-align: center;
+}
+h1::after {
+  /* Соответствует тексту h1 */
+  content: "Форма заказа триала";
+  position: absolute;
+  left: -2px;
+  top: -1px;
+  width: 100%;
+
+  font-size: 1em;
+  color: transparent;
+  text-align: center;
+
+  -webkit-text-stroke: 2px var(--color-body-text);
+}
+
+.fieldset {
+  border: none;
+}
+.fieldset > legend {
+  margin-bottom: .5rem;
+}
+.checkboxes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.checkboxes input {
+  display: none;
+}
+.checkboxes > label {
+  padding-top: var(--checkbox-padding-block);
+  padding-bottom: var(--checkbox-padding-block);
+
+  font-size: var(--checkbox-font-size);
+  text-align: center;
+
+  background-color: var(--color-checkbox-background);
+
+  outline: 5px solid var(--color-checkbox-background);
+  outline-offset: 1px;
+
+  border-radius: 8px;
+
+  transition: .2s;
+}
+.checkboxes > label:has(input:checked) {
+  color: var(--color-checkbox-active-text);
+  background-color: var(--color-checkbox-active-background);
+  outline-color: var(--color-checkbox-active-background);
+}
+
+.input-group {
+  display: grid;
+  gap: 0.3rem;
+}
+.input-group input {
+  width: 100%;
+  padding: var(--input-padding);
+
+  font-size: var(--input-font-size);
+
+  background-color: var(--color-input-background);
+
+  border: none;
+  border-radius: 8px;
+}
+.input-group input:focus {
+  outline: 5px solid var(--color-input-background);
+  outline-offset: 1px;
+}
+.input-group input::placeholder {
+  color: var(--color-input-placeholder);
+}
+
+.button {
+  width: 100%;
+  padding: var(--button-padding-block);
+
+  color: var(--color-button-text);
+
+  background-color: var(--color-button-background);
+
+  border: none;
+  border-radius: 8px;
+
+  transition: .2s;
+}
+.button:active {
+  background-color: var(--color-button-active-background);
+
+  transform: translateY(2px);
+}
+
+#link-trials {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+
+  text-decoration: none;
+}
+
+/* start Table */
 .table {
   overflow: auto;
   width: 100%;
@@ -78,3 +241,4 @@ form > * {
   color: #000000;
   padding: 5px;
 }
+/* end Table */

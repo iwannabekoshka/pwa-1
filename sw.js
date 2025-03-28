@@ -1,11 +1,13 @@
-const CACHE_NAME = 'pwa-form-cache-v6';
+const CACHE_NAME = 'pwa-form-cache-v7';
 const urlsToCache = [
     '/',
     '/index.html',
     '/trials.html',
     '/icons/pvs_logo_4.png',
     '/static/css/style.css',
-    '/static/fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf',
+    '/static/fonts/Manrope/Manrope-VariableFont_wdth.ttf',
+    '/static/fonts/Pribambas/WEB/Pribambas-Regular.woff2',
+    '/static/fonts/Pribambas/WEB/Pribambas-Regular.woff',
     '/static/js/app.js',
     '/static/js/confetti.js',
     '/static/js/form.js',
