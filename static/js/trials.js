@@ -51,6 +51,10 @@ function renderTrials() {
 }
 
 saveExcelBtn.addEventListener("click", async function () {
+  const currentDate = (new Date().toLocaleDateString()).replace(/\//gm, "_");
+  const defaultFileName = `trials_${conferenceInput.value}_${currentDate}`;
+  const fileName = prompt("Введите имя файла", defaultFileName) || defaultFileName;
+
   // Получаем данные из localStorage
   let trials = localStorage.getItem(LOCAL_STORAGE_KEY_TRIALS);
 
@@ -120,7 +124,7 @@ saveExcelBtn.addEventListener("click", async function () {
   const blob = new Blob([excelContent], { type: "application/vnd.ms-excel" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = "trials.xls"; // Используем .xls (будет открываться в Excel)
+  link.download = `${fileName}.xls`; // Используем .xls (будет открываться в Excel)
 
   // Для iOS добавляем ссылку в DOM перед кликом
   document.body.appendChild(link);

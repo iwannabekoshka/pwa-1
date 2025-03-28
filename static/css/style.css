@@ -200,9 +200,6 @@ h1::after {
   transition: .2s;
   cursor: pointer;
 }
-.button:hover {
-  background-color: var(--color-button-active-background);
-}
 .button:active {
   background-color: var(--color-button-active-background);
 
@@ -211,8 +208,8 @@ h1::after {
 
 .link-trials {
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 20px;
+  right: 20px;
 }
 .link-trials a {
   text-decoration: none;
