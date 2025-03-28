@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-form-cache-v9';
+const CACHE_NAME = 'pwa-form-cache-v10';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -8,6 +8,8 @@ const urlsToCache = [
     '/static/fonts/Manrope/Manrope-VariableFont_wght.ttf',
     '/static/fonts/Pribambas/WEB/Pribambas-Regular.woff2',
     '/static/fonts/Pribambas/WEB/Pribambas-Regular.woff',
+    '/static/images/delete-48.png',
+    '/static/images/excel-3-48.png',
     '/static/js/app.js',
     '/static/js/confetti.js',
     '/static/js/form.js',

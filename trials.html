@@ -16,12 +16,23 @@
 <body>
   <div class="container">
     <div class="card" style="display: grid; gap: 30px;">
-      <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between;">
         <div><a href="/index.html">Обратно на форму</a></div>
 
-        <div><button id="save-to-excel" class="button">Сохранить в Excel</button></div>
+        <div style="display: flex; gap: 20px;">
+          <div>
+            <button id="save-to-excel" class="button" style="display: flex;" title="Сохранить в Excel">
+              <img src="/static/images/excel-3-48.png" alt="Сохранить в Excel" width="48" height="48">
+            </button>
+          </div>
 
-        <div><button id="clear-local-data" class="button">Очистить данные приложения</button></div>
+          <div>
+            <button id="clear-local-data" class="button" style="display: flex; --color-button-background: salmon;"
+              title="Очистить данные приложения">
+              <img src="/static/images/delete-48.png" alt="Очистить данные приложения" width="48" height="48">
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="input-group">
